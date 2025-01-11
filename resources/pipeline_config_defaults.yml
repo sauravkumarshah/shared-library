@@ -1,8 +1,0 @@
-stages:
-  - checkout
-  - build
-  - test
-  - deploy
-
-variables:
-  environment: "staging"
