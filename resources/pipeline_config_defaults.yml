@@ -2,8 +2,8 @@ stages:
   - checkout
   - build
   - test
-  - deploy
-
+  - build_artifacts
+  - publish_artifacts
 variables:
   environment: "dev"
   artifact_name: "default-artifact"
