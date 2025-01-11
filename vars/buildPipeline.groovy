@@ -95,31 +95,29 @@ def call(Map pipelineParams = [:]) {
                     }
                 }
             }
-            stages {
-                stage('Generate Client Jar') {
-                    when {
-                        expression {
-                            return PIPELINE_CONFIG.stages.contains('generate_client_jar')
-                        }
-                    }
-                    steps {
-                        script {
-                            echo "Generate Client jar for ${PROJECT_NAME}"
-
-                        }
+            stage('Generate Client Jar') {
+                when {
+                    expression {
+                        return PIPELINE_CONFIG.stages.contains('generate_client_jar')
                     }
                 }
-                stage('Build Client Jar') {
-                    when {
-                        expression {
-                            return PIPELINE_CONFIG.stages.contains('build_client_jar')
-                        }
-                    }
-                    steps {
-                        script {
-                            echo "Build Client jar for ${PROJECT_NAME}"
+                steps {
+                    script {
+                        echo "Generate Client jar for ${PROJECT_NAME}"
 
-                        }
+                    }
+                }
+            }
+            stage('Build Client Jar') {
+                when {
+                    expression {
+                        return PIPELINE_CONFIG.stages.contains('build_client_jar')
+                    }
+                }
+                steps {
+                    script {
+                        echo "Build Client jar for ${PROJECT_NAME}"
+
                     }
                 }
             }
