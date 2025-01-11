@@ -95,7 +95,7 @@ def call(Map pipelineParams = [:]) {
                     }
                 }
             }
-            stages('Generate and Build Client jars') {
+            stages {
                 stage('Generate Client Jar') {
                     when {
                         expression {
