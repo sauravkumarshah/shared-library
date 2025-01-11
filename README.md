@@ -82,7 +82,7 @@ The default configuration is stored in **pipeline_config_defaults.yml** in the *
 
 ### Customization
 
-Teams can override stages or variables by defining a pipeline_config.yml file in their repository. The shared library handles merging with the defaults, ensuring flexibility while maintaining standardization.
+Teams can override stages or variables by defining a **pipeline_config.yml** file in their repository. The **shared library** handles merging with the defaults, ensuring flexibility while maintaining standardization.
 
 ---
 
