@@ -10,8 +10,7 @@ def call(Map pipelineParams = [:]) {
                 steps {
                     echo "Pipeline configuration: ${PIPELINE_CONFIG}"
                     echo "Type of PIPELINE_CONFIG: ${PIPELINE_CONFIG.getClass()}"
-                    echo "Stages: ${PIPELINE_CONFIG['stages']}"  // Should print a list like [checkout, build, test]
-                    echo "Variables: ${PIPELINE_CONFIG['variables']}"  // Should print a map like [environment: "dev", artifact_name: "service-a-artifact"]
+                    echo "Stages: ${PIPELINE_CONFIG['stages']}"  // Accessing stages using map syntax
                     // Proceed with checkout step
                     checkout scm
                 }
