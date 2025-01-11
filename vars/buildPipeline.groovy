@@ -8,9 +8,8 @@ def call(Map pipelineParams = [:]) {
         stages {
             stage('Checkout') {
                 steps {
-                    echo "Pipeline configuration: ${env.PIPELINE_CONFIG}"
-                    echo "Checking for 'test' in stages: ${env.PIPELINE_CONFIG.stages}"
-                    echo "Does 'test' exist in stages? ${env.PIPELINE_CONFIG.stages.contains('test')}"
+                    echo "Pipeline configuration: ${PIPELINE_CONFIG}"
+                    echo "Stages: ${PIPELINE_CONFIG.stages}"
                     // Proceed with checkout step
                     checkout scm
                 }
@@ -18,7 +17,7 @@ def call(Map pipelineParams = [:]) {
             stage('Build') {
                 steps {
                     script {
-                        echo "Building project: ${env.PROJECT_NAME}"
+                        echo "Building project: ${PROJECT_NAME}"
                         sh 'chmod +x ./gradlew'
                         sh './gradlew clean build -x test'
                     }
@@ -36,7 +35,7 @@ def call(Map pipelineParams = [:]) {
             stage('Test') {
                 steps {
                     script {
-                        echo "Running tests for ${env.PROJECT_NAME}"
+                        echo "Running tests for ${PROJECT_NAME}"
                         sh './gradlew test'
                     }
                 }
@@ -52,21 +51,21 @@ def call(Map pipelineParams = [:]) {
             stage('Build Artifacts') {
                 steps {
                     script {
-                        echo "Building artifacts for ${env.PROJECT_NAME}"
+                        echo "Building artifacts for ${PROJECT_NAME}"
                     }
                 }
             }
             stage('Publish Artifacts') {
                 steps {
                     script {
-                        echo "Publishing artifacts for ${env.PROJECT_NAME}"
+                        echo "Publishing artifacts for ${PROJECT_NAME}"
                     }
                 }
             }
         }
         post {
             always {
-                echo "Pipeline completed for ${env.PROJECT_NAME}"
+                echo "Pipeline completed for ${PROJECT_NAME}"
             }
         }
     }
