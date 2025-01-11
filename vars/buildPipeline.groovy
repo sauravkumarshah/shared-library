@@ -1,3 +1,5 @@
+@Library('groovy-commons') _
+
 def call(Map pipelineParams = [:]) {
     pipeline {
         agent any
