@@ -3,25 +3,14 @@ def call(Map pipelineParams = [:]) {
         agent any
         environment {
             PROJECT_NAME = "${pipelineParams.projectName ?: 'Default-Project'}"  // Correct usage of string interpolation
-            PIPELINE_CONFIG = readYaml file: 'pipeline_config.yml'
         }
         stages {
             stage('Checkout') {
-                when {
-                    expression {
-                        return PIPELINE_CONFIG.stages.contains('checkout')
-                    }
-                }
                 steps {
                     checkout scm
                 }
             }
             stage('Build') {
-                when {
-                    expression {
-                        return PIPELINE_CONFIG.stages.contains('build')
-                    }
-                }
                 steps {
                     script {
                         echo "Building project: ${PROJECT_NAME}"
@@ -40,11 +29,6 @@ def call(Map pipelineParams = [:]) {
                 }
             }
             stage('Test') {
-                when {
-                    expression {
-                        return PIPELINE_CONFIG.stages.contains('test')
-                    }
-                }
                 steps {
                     script {
                         echo "Running tests for ${PROJECT_NAME}"
