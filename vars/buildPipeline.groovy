@@ -12,19 +12,18 @@ def call(Map pipelineParams = [:]) {
                 steps {
                     script {
                         // Read the YAML file using the readYaml step
-                        def defaultsFile = libraryResource('pipeline_config_defaults.yml')
-                        def pipelineConfig
-
-                        def yamlParser = new YamlSlurper()
-
                         // Check if pipeline_config.yml exists in the service repository
                         if (fileExists('pipeline_config.yml')) {
                             echo "Using pipeline_config.yml from service repository."
                             pipelineConfig = readYaml file: 'pipeline_config.yml'
                         } else {
                             echo "pipeline_config.yml not found. Using default configuration from shared library."
-                            pipelineConfig = yamlParser.parseText(defaultsFile)
+                            def defaultsFileContent = libraryResource('pipeline_config_defaults.yml')
+                            pipelineConfig = readYaml text: defaultsFileContent
                         }
+
+                        // Debugging: Print the configuration
+                        echo "Pipeline configuration: ${pipelineConfig}"
 
                         // Set the pipeline config as an environment variable (as a string)
                         PIPELINE_CONFIG = pipelineConfig
