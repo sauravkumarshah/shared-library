@@ -4,9 +4,16 @@ def call(Map pipelineParams = [:]) {
         environment {
             PROJECT_NAME = "${pipelineParams.projectName ?: 'Default-Project'}"  // Correct usage of string interpolation
         }
+        environment {
+            PIPELINE_CONFIG = readYaml file: 'pipeline_config.yml'
+        }
         stages {
             stage('Checkout') {
                 steps {
+                    echo "Pipeline configuration: ${PIPELINE_CONFIG}"
+                    echo "Checking for 'test' in stages: ${PIPELINE_CONFIG.stages}"
+                    echo "Does 'test' exist in stages? ${PIPELINE_CONFIG.stages.contains('test')}"
+                    // Proceed with checkout step
                     checkout scm
                 }
             }
