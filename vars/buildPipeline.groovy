@@ -74,7 +74,7 @@ def call(Map pipelineParams = [:]) {
             stage('Build Artifacts') {
                 when {
                     expression {
-                        return PIPELINE_CONFIG.stages.contains('build artifacts')
+                        return PIPELINE_CONFIG.stages.contains('build_artifacts')
                     }
                 }
                 steps {
@@ -86,7 +86,7 @@ def call(Map pipelineParams = [:]) {
             stage('Publish Artifacts') {
                 when {
                     expression {
-                        return PIPELINE_CONFIG.stages.contains('publish artifacts')
+                        return PIPELINE_CONFIG.stages.contains('publish_artifacts')
                     }
                 }
                 steps {
