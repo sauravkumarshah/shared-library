@@ -1,4 +1,4 @@
-# Jenkins Shared Library
+# Shared Library for Jenkins Pipelines
 
 This repository contains a Jenkins shared library for managing and streamlining CI/CD pipelines across multiple projects. The shared library provides reusable pipeline steps, utilities, and configurations, allowing teams to standardize their Jenkins pipelines and reduce duplication.
 
