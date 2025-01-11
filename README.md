@@ -59,6 +59,9 @@ jenkins-shared-library/
      - checkout
      - build
      - test
+     - static_api_documentation
+     - generate_client_jar
+     - build_client_jar
      - build_artifacts
      - publish_artifacts
     variables:
