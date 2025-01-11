@@ -9,11 +9,14 @@ def call(Map pipelineParams = [:]) {
             stage('Checkout') {
                 when {
                     expression {
-                        echo "Checkout stage requried : ${PIPELINE_CONFIG.stages.contains('checkout')}"
                         return PIPELINE_CONFIG.stages.contains('checkout')
                     }
                 }
                 steps {
+                    echo "Pipeline configuration: ${PIPELINE_CONFIG}"
+                    echo "Checking for 'test' in stages: ${PIPELINE_CONFIG.stages}"
+                    echo "Does 'test' exist in stages? ${PIPELINE_CONFIG.stages.contains('test')}"
+                    // Proceed with checkout step
                     checkout scm
                 }
             }
