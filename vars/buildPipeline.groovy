@@ -1,21 +1,24 @@
-@Library('groovy-commons') _
-
 def call(Map pipelineParams = [:]) {
     pipeline {
         agent any
         environment {
-            PROJECT_NAME = "${pipelineParams.projectName ?: 'Default-Project'}"  // Correct usage of string interpolation
-            PIPELINE_CONFIG = readYaml file: 'pipeline_config.yml'
+            PROJECT_NAME = "${pipelineParams.projectName ?: 'Default-Project'}"  // Get the project name for the services to build the Jenkins pipeline.
+            PIPELINE_CONFIG = '' // Declare the environment variable to store the parsed pipeline config.
         }
         stages {
             stage('Checkout') {
                 steps {
                     script {
-                        // Read YAML file explicitly inside the script block then only correct classes is initializing else it would store all the contents of the yml into String only.
-                        PIPELINE_CONFIG_NEW =  new groovy.yaml.YamlSlurper().parseText(PIPELINE_CONFIG)
-                        echo "Pipeline configuration: ${PIPELINE_CONFIG_NEW}"
-                        echo "Type of PIPELINE_CONFIG: ${PIPELINE_CONFIG_NEW.getClass()}"
-                        echo "Stages: ${PIPELINE_CONFIG['stages']}"  // Accessing stages using map syntax
+                        // Read the YAML file using the readYaml step
+                        def pipelineConfig = readYaml file: 'pipeline_config.yml'
+
+                        // Set the pipeline config as an environment variable (as a string)
+                        PIPELINE_CONFIG = pipelineConfig
+
+                        // Print the pipeline configuration
+                        echo "Pipeline configuration: ${PIPELINE_CONFIG}"
+                        echo "Stages: ${PIPELINE_CONFIG.stages}"
+                        echo "Environment: ${PIPELINE_CONFIG.variables.environment}"
                     }
                     checkout scm
                 }
@@ -23,6 +26,10 @@ def call(Map pipelineParams = [:]) {
             stage('Build') {
                 steps {
                     script {
+                        // Access the stages and variables from the previously set environment variable
+                        echo "Accessing Stages in another stage: ${PIPELINE_CONFIG.stages}"
+                        echo "Environment in another stage: ${PIPELINE_CONFIG.variables.environment}"
+
                         echo "Building project: ${PROJECT_NAME}"
                         sh 'chmod +x ./gradlew'
                         sh './gradlew clean build -x test'
