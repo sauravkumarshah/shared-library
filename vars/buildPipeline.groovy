@@ -19,8 +19,6 @@ def call(Map pipelineParams = [:]) {
                         echo "Pipeline configuration: ${PIPELINE_CONFIG}"
                         echo "Stages: ${PIPELINE_CONFIG.stages}"
                         echo "Environment: ${PIPELINE_CONFIG.variables.environment}"
-
-                        sh 'chmod +x ./gradlew'
                     }
                     checkout scm
                 }
@@ -34,6 +32,7 @@ def call(Map pipelineParams = [:]) {
                 steps {
                     script {
                         echo "Building project: ${PROJECT_NAME}"
+                        sh 'chmod +x ./gradlew'
                         sh './gradlew clean build -x test'
                     }
                 }
@@ -56,6 +55,7 @@ def call(Map pipelineParams = [:]) {
                 steps {
                     script {
                         echo "Running tests for ${PROJECT_NAME}"
+                        sh 'chmod +x ./gradlew'
                         sh './gradlew test'
                     }
                 }
