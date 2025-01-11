@@ -17,8 +17,11 @@ def call(Map pipelineParams = [:]) {
 
                         // Print the pipeline configuration
                         echo "Pipeline configuration: ${PIPELINE_CONFIG}"
+
+                        // Print the stages to complete in building the Jenkins pipeline for Microservices.
                         echo "Stages: ${PIPELINE_CONFIG.stages}"
-                        echo "Environment: ${PIPELINE_CONFIG.variables.environment}"
+                        echo "Variables: ${PIPELINE_CONFIG.variables}"
+                        echo "Artifact name: ${PIPELINE_CONFIG.variables.artifact_name}"
                     }
                     checkout scm
                 }
