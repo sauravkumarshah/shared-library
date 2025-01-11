@@ -19,6 +19,8 @@ def call(Map pipelineParams = [:]) {
                         echo "Pipeline configuration: ${PIPELINE_CONFIG}"
                         echo "Stages: ${PIPELINE_CONFIG.stages}"
                         echo "Environment: ${PIPELINE_CONFIG.variables.environment}"
+
+                        sh 'chmod +x ./gradlew'
                     }
                     checkout scm
                 }
@@ -26,15 +28,12 @@ def call(Map pipelineParams = [:]) {
             stage('Build') {
                 when {
                     expression {
-                        echo "Stages: ${PIPELINE_CONFIG.stages}"
-                        echo "Class: ${PIPELINE_CONFIG.getClass()}"
                         return PIPELINE_CONFIG.stages.contains('build')
                     }
                 }
                 steps {
                     script {
                         echo "Building project: ${PROJECT_NAME}"
-                        sh 'chmod +x ./gradlew'
                         sh './gradlew clean build -x test'
                     }
                 }
@@ -49,6 +48,11 @@ def call(Map pipelineParams = [:]) {
                 }
             }
             stage('Test') {
+                when {
+                    expression {
+                        return PIPELINE_CONFIG.stages.contains('test')
+                    }
+                }
                 steps {
                     script {
                         echo "Running tests for ${PROJECT_NAME}"
@@ -65,6 +69,11 @@ def call(Map pipelineParams = [:]) {
                 }
             }
             stage('Build Artifacts') {
+                when {
+                    expression {
+                        return PIPELINE_CONFIG.stages.contains('build artifacts')
+                    }
+                }
                 steps {
                     script {
                         echo "Building artifacts for ${PROJECT_NAME}"
@@ -72,6 +81,11 @@ def call(Map pipelineParams = [:]) {
                 }
             }
             stage('Publish Artifacts') {
+                when {
+                    expression {
+                        return PIPELINE_CONFIG.stages.contains('publish artifacts')
+                    }
+                }
                 steps {
                     script {
                         echo "Publishing artifacts for ${PROJECT_NAME}"
