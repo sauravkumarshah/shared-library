@@ -10,7 +10,7 @@ def call(Map pipelineParams = [:]) {
                 steps {
                     echo "Pipeline configuration: ${PIPELINE_CONFIG}"
                     echo "Stages: ${PIPELINE_CONFIG['stages']}"  // Should print a list like [checkout, build, test]
-                    echo "Variables: ${PIPELINE_CONFIG['variables']"  // Should print a map like [environment: "dev", artifact_name: "service-a-artifact"]
+                    echo "Variables: ${PIPELINE_CONFIG['variables']}"  // Should print a map like [environment: "dev", artifact_name: "service-a-artifact"]
                     // Proceed with checkout step
                     checkout scm
                 }
