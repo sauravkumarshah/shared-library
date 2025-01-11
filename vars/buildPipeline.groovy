@@ -14,6 +14,7 @@ def call(Map pipelineParams = [:]) {
                 steps {
                     script {
                         echo "Building project: ${PROJECT_NAME}"
+                        sh 'chmod +x ./gradlew'
                         sh './gradlew clean build -x test'
                     }
                 }
