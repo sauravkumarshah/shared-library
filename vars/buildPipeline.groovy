@@ -27,8 +27,8 @@ def call(Map pipelineParams = [:]) {
                 when {
                     expression {
                         echo "Stages: ${PIPELINE_CONFIG.stages}"
-                        echo "Stages: ${PIPELINE_CONFIG.getClass()}"
-                        return env.CONDITION_MET == 'true'
+                        echo "Class: ${PIPELINE_CONFIG.getClass()}"
+                        return PIPELINE_CONFIG.stages.contains('build')
                     }
                 }
                 steps {
