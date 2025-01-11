@@ -10,4 +10,4 @@ This library contains reusable pipeline templates and configurations for JTE.
 Include the library in your Jenkinsfile:
 ```groovy
 @Library('shared-library') _
-buildPipeline()
+buildPipeline(projectName: 'service-name')
