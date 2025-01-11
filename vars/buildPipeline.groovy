@@ -24,12 +24,15 @@ def call(Map pipelineParams = [:]) {
                 }
             }
             stage('Build') {
+                when {
+                    expression {
+                        echo "Stages: ${PIPELINE_CONFIG.stages}"
+                        echo "Stages: ${PIPELINE_CONFIG.getClass()}"
+                        return env.CONDITION_MET == 'true'
+                    }
+                }
                 steps {
                     script {
-                        // Access the stages and variables from the previously set environment variable
-                        echo "Accessing Stages in another stage: ${PIPELINE_CONFIG.stages}"
-                        echo "Environment in another stage: ${PIPELINE_CONFIG.variables.environment}"
-
                         echo "Building project: ${PROJECT_NAME}"
                         sh 'chmod +x ./gradlew'
                         sh './gradlew clean build -x test'
