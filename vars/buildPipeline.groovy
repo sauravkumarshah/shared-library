@@ -82,6 +82,47 @@ def call(Map pipelineParams = [:]) {
                     }
                 }
             }
+            stage('Static Api Documentation') {
+                when {
+                    expression {
+                        return PIPELINE_CONFIG.stages.contains('static_api_documentation')
+                    }
+                }
+                steps {
+                    script {
+                        echo "Generate Static Api Documentation for ${PROJECT_NAME}"
+
+                    }
+                }
+            }
+            stages('Generate and Build Client jars') {
+                stage('Generate Client Jar') {
+                    when {
+                        expression {
+                            return PIPELINE_CONFIG.stages.contains('generate_client_jar')
+                        }
+                    }
+                    steps {
+                        script {
+                            echo "Generate Client jar for ${PROJECT_NAME}"
+
+                        }
+                    }
+                }
+                stage('Build Client Jar') {
+                    when {
+                        expression {
+                            return PIPELINE_CONFIG.stages.contains('build_client_jar')
+                        }
+                    }
+                    steps {
+                        script {
+                            echo "Build Client jar for ${PROJECT_NAME}"
+
+                        }
+                    }
+                }
+            }
             stage('Build Artifacts') {
                 when {
                     expression {
@@ -91,6 +132,7 @@ def call(Map pipelineParams = [:]) {
                 steps {
                     script {
                         echo "Building artifacts for ${PROJECT_NAME}"
+
                     }
                 }
             }
