@@ -1,5 +1,3 @@
-import groovy.yaml.YamlSlurper
-
 def call(Map pipelineParams = [:]) {
     pipeline {
         agent any
