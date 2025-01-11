@@ -2,7 +2,7 @@ def call(Map pipelineParams = [:]) {
     pipeline {
         agent any
         environment {
-            PROJECT_NAME = pipelineParams.projectName ?: 'Default-Project'
+            PROJECT_NAME = "${pipelineParams.projectName ?: 'Default-Project'}"  // Correct usage of string interpolation
         }
         stages {
             stage('Checkout') {
