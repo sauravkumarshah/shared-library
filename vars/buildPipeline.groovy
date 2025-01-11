@@ -14,6 +14,7 @@ def call(Map pipelineParams = [:]) {
                 steps {
                     script {
                         echo "Building project: ${PROJECT_NAME}"
+                        sh './gradlew clean build -x test'
                     }
                 }
             }
@@ -21,13 +22,21 @@ def call(Map pipelineParams = [:]) {
                 steps {
                     script {
                         echo "Running tests for ${PROJECT_NAME}"
+                        sh './gradlew test'
                     }
                 }
             }
-            stage('Deploy') {
+            stage('Build Artifacts') {
                 steps {
                     script {
-                        echo "Deploying ${PROJECT_NAME}"
+                        echo "Building artifacts for ${PROJECT_NAME}"
+                    }
+                }
+            }
+            stage('Publish Artifacts') {
+                steps {
+                    script {
+                        echo "Publishing artifacts for ${PROJECT_NAME}"
                     }
                 }
             }
