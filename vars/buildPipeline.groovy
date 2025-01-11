@@ -10,7 +10,7 @@ def call(Map pipelineParams = [:]) {
                 steps {
                     script {
                         // Read YAML file explicitly inside the script block
-                        PIPELINE_CONFIG = readYaml file: 'pipeline_config.yml'
+//                        PIPELINE_CONFIG = readYaml file: 'pipeline_config.yml'
                         echo "Pipeline configuration: ${PIPELINE_CONFIG}"
                         echo "Type of PIPELINE_CONFIG: ${PIPELINE_CONFIG.getClass()}"
                         echo "Stages: ${PIPELINE_CONFIG['stages']}"  // Accessing stages using map syntax
