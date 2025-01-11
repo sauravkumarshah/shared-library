@@ -9,10 +9,10 @@ def call(Map pipelineParams = [:]) {
             stage('Checkout') {
                 steps {
                     script {
-                        // Read YAML file explicitly inside the script block
-//                        PIPELINE_CONFIG = readYaml file: 'pipeline_config.yml'
-                        echo "Pipeline configuration: ${PIPELINE_CONFIG}"
-                        echo "Type of PIPELINE_CONFIG: ${PIPELINE_CONFIG.getClass()}"
+                        // Read YAML file explicitly inside the script block then only correct classes is initializing else it would store all the contents of the yml into String only.
+                        PIPELINE_CONFIG_NEW =  new groovy.yaml.YamlSlurper().parseText(PIPELINE_CONFIG)
+                        echo "Pipeline configuration: ${PIPELINE_CONFIG_NEW}"
+                        echo "Type of PIPELINE_CONFIG: ${PIPELINE_CONFIG_NEW.getClass()}"
                         echo "Stages: ${PIPELINE_CONFIG['stages']}"  // Accessing stages using map syntax
                     }
                     checkout scm
