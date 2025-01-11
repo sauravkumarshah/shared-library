@@ -9,6 +9,8 @@ def call(Map pipelineParams = [:]) {
             stage('Checkout') {
                 steps {
                     echo "Pipeline configuration: ${PIPELINE_CONFIG}"
+                    echo "Current environment: ${env.environment}" // Prints "dev"
+                    echo "Artifact name: ${env.artifact_name}" // Prints "service-a-artifact"
                     echo "Stages: ${PIPELINE_CONFIG.stages}"  // Should print a list like [checkout, build, test]
                     echo "Variables: ${PIPELINE_CONFIG.variables}"  // Should print a map like [environment: "dev", artifact_name: "service-a-artifact"]
                     // Proceed with checkout step
