@@ -1,0 +1,11 @@
+stages:
+  - checkout
+  - build
+  - test
+  - deploy
+
+variables:
+  environment: "dev"
+  artifact_name: "default-artifact"
+  build_tool: "maven"   # Default build tool
+  notify_channel: "#devops-alerts"  # Default Slack notification channel
