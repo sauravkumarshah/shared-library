@@ -1,12 +1,21 @@
 stages:
-  - checkout
-  - build
-  - test
-  - static_api_documentation
-  - generate_client_jar
-  - build_client_jar
-  - build_artifacts
-  - publish_artifacts
+  - name: checkout
+    enabled: true
+  - name: build
+    enabled: true
+  - name: test
+    enabled: true
+  - name: static_api_documentation
+    enabled: true
+  - name: generate_client_jar
+    enabled: false
+  - name: build_client_jar
+    enabled: false
+  - name: build_artifacts
+    enabled: true
+  - name: publish_artifacts
+    enabled: true
+
 variables:
   environment: "dev"
   artifact_name: "default-artifact"
