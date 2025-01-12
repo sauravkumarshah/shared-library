@@ -1,8 +1,8 @@
-def call() {
+def call(Map pipelineParams = [:]) {
     pipeline {
         agent any
         environment {
-            PROJECT_NAME = 'Default-Project' //"${pipelineParams.projectName ?: 'Default-Project'}"  // Get the project name for the services to build the Jenkins pipeline.
+            PROJECT_NAME = "${pipelineParams.projectName ?: 'Default-Project'}"  // Get the project name for the services to build the Jenkins pipeline.
             PIPELINE_CONFIG = '' // Declare the environment variable to store the parsed pipeline config.
         }
         stages {
