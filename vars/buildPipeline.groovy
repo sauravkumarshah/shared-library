@@ -25,7 +25,7 @@ def call(Map pipelineParams = [:]) {
             stage('Build') {
                 when {
                     expression {
-                        return PIPELINE_CONFIG.stages.contains('build')
+                        return PIPELINE_CONFIG.stages.find { it.name == 'build' }?.enabled == true
                     }
                 }
                 steps {
@@ -48,7 +48,7 @@ def call(Map pipelineParams = [:]) {
             stage('Test') {
                 when {
                     expression {
-                        return PIPELINE_CONFIG.stages.contains('test')
+                        return PIPELINE_CONFIG.stages.find { it.name == 'test' }?.enabled == true
                     }
                 }
                 steps {
@@ -70,33 +70,55 @@ def call(Map pipelineParams = [:]) {
             stage('Static Api Documentation') {
                 when {
                     expression {
-                        return PIPELINE_CONFIG.stages.contains('static_api_documentation')
+                        return PIPELINE_CONFIG.stages.find { it.name == 'static_api_documentation' }?.enabled == true
                     }
                 }
                 steps {
                     script {
                         echo "Generate Static Api Documentation for ${PROJECT_NAME}"
-
+                    }
+                }
+            }
+            stage('Generate Client Jar') {
+                when {
+                    expression {
+                        return PIPELINE_CONFIG.stages.find { it.name == 'generate_client_jar' }?.enabled == true
+                    }
+                }
+                steps {
+                    script {
+                        echo "Generate Client jar for ${PROJECT_NAME}"
+                    }
+                }
+            }
+            stage('Build Client Jar') {
+                when {
+                    expression {
+                        return PIPELINE_CONFIG.stages.find { it.name == 'build_client_jar' }?.enabled == true
+                    }
+                }
+                steps {
+                    script {
+                        echo "Build Client jar for ${PROJECT_NAME}"
                     }
                 }
             }
             stage('Build Artifacts') {
                 when {
                     expression {
-                        return PIPELINE_CONFIG.stages.contains('build_artifacts')
+                        return PIPELINE_CONFIG.stages.find { it.name == 'build_artifacts' }?.enabled == true
                     }
                 }
                 steps {
                     script {
                         echo "Building artifacts for ${PROJECT_NAME}"
-
                     }
                 }
             }
             stage('Publish Artifacts') {
                 when {
                     expression {
-                        return PIPELINE_CONFIG.stages.contains('publish_artifacts')
+                        return PIPELINE_CONFIG.stages.find { it.name == 'publish_artifacts' }?.enabled == true
                     }
                 }
                 steps {
