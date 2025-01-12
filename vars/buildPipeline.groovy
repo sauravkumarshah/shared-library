@@ -9,22 +9,7 @@ def call(Map pipelineParams = [:]) {
             stage('Checkout') {
                 steps {
                     script {
-                        // Read the YAML file using the readYaml step
-                        // Check if pipeline_config.yml exists in the service repository
-                        if (fileExists('pipeline_config.yml')) {
-                            echo "Using pipeline_config.yml from service repository."
-                            pipelineConfig = readYaml file: 'pipeline_config.yml'
-                        } else {
-                            echo "pipeline_config.yml not found. Using default configuration from shared library."
-                            def defaultsFileContent = libraryResource('pipeline_config_defaults.yml')
-                            pipelineConfig = readYaml text: defaultsFileContent
-                        }
-
-                        // Debugging: Print the configuration
-                        echo "Pipeline configuration: ${pipelineConfig}"
-
-                        // Set the pipeline config as an environment variable (as a string)
-                        PIPELINE_CONFIG = pipelineConfig
+                        PIPELINE_CONFIG = utility.loadPipelineConfig()
 
                         // Print the pipeline configuration
                         echo "Pipeline configuration: ${PIPELINE_CONFIG}"
@@ -91,32 +76,6 @@ def call(Map pipelineParams = [:]) {
                 steps {
                     script {
                         echo "Generate Static Api Documentation for ${PROJECT_NAME}"
-
-                    }
-                }
-            }
-            stage('Generate Client Jar') {
-                when {
-                    expression {
-                        return PIPELINE_CONFIG.stages.contains('generate_client_jar')
-                    }
-                }
-                steps {
-                    script {
-                        echo "Generate Client jar for ${PROJECT_NAME}"
-
-                    }
-                }
-            }
-            stage('Build Client Jar') {
-                when {
-                    expression {
-                        return PIPELINE_CONFIG.stages.contains('build_client_jar')
-                    }
-                }
-                steps {
-                    script {
-                        echo "Build Client jar for ${PROJECT_NAME}"
 
                     }
                 }
