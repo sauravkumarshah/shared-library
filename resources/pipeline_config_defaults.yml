@@ -8,9 +8,9 @@ stages:
   - name: static_api_documentation
     enabled: true
   - name: generate_client_jar
-    enabled: false
+    enabled: true
   - name: build_client_jar
-    enabled: false
+    enabled: true
   - name: build_artifacts
     enabled: true
   - name: publish_artifacts
