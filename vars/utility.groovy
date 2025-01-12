@@ -5,14 +5,17 @@ def parseYaml(String yamlContent) {
 }
 
 def loadPipelineConfig(String filePath = 'pipeline_config.yml') {
-    // Load the pipeline configuration from a YAML file
     if (fileExists(filePath)) {
+        // Load pipeline configuration from a file in the workspace
         return readYaml(file: filePath)
     } else {
+        // Load default pipeline configuration from the shared library
         echo "Pipeline configuration file not found. Using defaults."
-        return readYaml(file: "${libraryResource('pipeline_config_defaults.yml')}")
+        def defaultConfigContent = libraryResource('pipeline_config_defaults.yml')
+        return readYaml(text: defaultConfigContent)  // Correctly parse YAML from the string content
     }
 }
+
 
 def mergeConfigs(Map defaultConfig, Map userConfig) {
     // Merge default configuration with user configuration, with userConfig taking precedence
