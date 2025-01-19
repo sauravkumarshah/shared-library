@@ -4,11 +4,13 @@ def call(Map pipelineParams = [:]) {
         environment {
             PROJECT_NAME = "${pipelineParams.projectName ?: 'Default-Project'}"  // Get the project name for the services to build the Jenkins pipeline.
             PIPELINE_CONFIG = '' // Declare the environment variable to store the parsed pipeline config.
+            STUDENT_NAME = "${pipelineParams.studentName ?: 'Student name not found'}"
         }
         stages {
             stage('Checkout') {
                 steps {
                     script {
+                        echo "Student name : ${STUDENT_NAME}"
                         PIPELINE_CONFIG = utility.loadPipelineConfig()
 
                         // Print the pipeline configuration
